@@ -1,0 +1,17 @@
+api_version = "2026-10"
+
+[[extensions]]
+name = "Payment method rules"
+handle = "payment-method-rules"
+uid = "5de3add8-ecd8-4974-74a3-533db4b6e47b1a9b5cca"
+type = "function"
+description = "Conditionally hides payment methods based on product tags in the cart."
+
+[[extensions.targeting]]
+target = "cart.payment-methods.transform.run"
+input_query = "src/cart_payment_methods_transform_run.graphql"
+export = "cart-payment-methods-transform-run"
+
+[extensions.build]
+command = ""
+path = "dist/function.wasm"

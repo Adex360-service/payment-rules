@@ -1,0 +1,21 @@
+query CartPaymentMethodsTransformRunInput {
+  cart {
+    lines {
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          product {
+            hasTags(tags: ["Eco", "smartphones"]) {
+              hasTag
+              tag
+            }
+          }
+        }
+      }
+    }
+  }
+  paymentMethods {
+    id
+    name
+  }
+}
