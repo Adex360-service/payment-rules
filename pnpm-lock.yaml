@@ -11,6 +11,9 @@ importers:
       '@vercel/node':
         specifier: ^5.5.0
         version: 5.10.2(supports-color@7.2.0)
+      '@vercel/postgres':
+        specifier: ^0.10.0
+        version: 0.10.0
 
   extensions/app-home:
     dependencies:
@@ -31,7 +34,7 @@ importers:
     dependencies:
       '@shopify/shopify_function':
         specifier: ^2.0.1
-        version: 2.0.1(@types/node@26.6.6)(supports-color@7.2.0)
+        version: 2.0.1(@types/node@26.6.6)(bufferutil@4.2.0)(supports-color@7.2.0)
 
 packages:
 
@@ -601,6 +604,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  '@neondatabase/serverless@0.9.5':
+    resolution: {integrity: sha512-siFas6gItqv6wD/pZnvdu34wEqgG3nSE6zWZdq5j2DEsa+VvX8i/5HXJOo06qrw5axPXn+lGCxeR+NLaSPIXug==}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -668,6 +674,9 @@ packages:
   '@types/node@26.6.6':
     resolution: {integrity: sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==}
 
+  '@types/pg@8.11.6':
+    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
+
   '@types/ws@8.18.2':
     resolution: {integrity: sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==}
 
@@ -684,6 +693,11 @@ packages:
 
   '@vercel/node@5.10.2':
     resolution: {integrity: sha512-YBXcoQVOh5O2ySXvzE+POhPEQEPMJJo4ctlMMdp5why/NIoa8m6gotv14j8Uo6D5qyZsnc+0+++JgUiV4mYB6w==}
+
+  '@vercel/postgres@0.10.0':
+    resolution: {integrity: sha512-fSD23DxGND40IzSkXjcFcxr53t3Tiym59Is0jSYIFpG4/0f0KO9SGtcp1sXiebvPaGe7N/tU05cH4yt2S6/IPg==}
+    engines: {node: '>=18.14'}
+    deprecated: '@vercel/postgres is deprecated. If you are setting up a new database, you can choose an alternate storage solution from the Vercel Marketplace. If you had an existing Vercel Postgres database, it should have been migrated to Neon as a native Vercel integration. You can find more details and the guide to migrate to Neon''s SDKs here: https://neon.com/docs/guides/vercel-postgres-transition-guide'
 
   '@vercel/static-config@3.4.1':
     resolution: {integrity: sha512-kJKTyOg25JDRgDkHEkc+vWlvURxmSQkVKyRPO4EEGD/8HpJT+4u9Z/VGxwnCZ6zZBxYPpma283qBsHwY0gXjfw==}
@@ -829,6 +843,10 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
+
+  bufferutil@4.2.0:
+    resolution: {integrity: sha512-gyy58jET9kst2IGyBKb96a4Y2bPGTHXGyCd0/1eqIV3hr1Sz3VxtA8n7bXh8fLIuE2K6Z0Upax5a5Msx+HU1IQ==}
+    engines: {node: '>=6.14.2'}
 
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -1430,6 +1448,9 @@ packages:
     resolution: {integrity: sha512-3pKJwH184Xo/lnH6oyP1q2pMd7HcypqqmRs91/6/i2CGtWwIKGCkOOMTm/zXbgTEWHw1uNpNi/igc3ePOYHb6w==}
     engines: {node: '>=0.10.0'}
 
+  obuf@1.1.2:
+    resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
+
   onetime@5.1.2:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
@@ -1496,6 +1517,21 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  pg-int8@1.0.1:
+    resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
+    engines: {node: '>=4.0.0'}
+
+  pg-numeric@1.0.2:
+    resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
+    engines: {node: '>=4'}
+
+  pg-protocol@1.16.1:
+    resolution: {integrity: sha512-p9VOFMiHB/ZbJATetbg+99PxssTVSQRnyuPSQ67mN1+1KBOjZaZ83ZQzltnxPhJwSsC3nwVjJ10DVJlerbFzLg==}
+
+  pg-types@4.1.0:
+    resolution: {integrity: sha512-o2XFanIMy/3+mThw69O8d4n1E5zsLhdO+OPqswezu7Z5ekP4hYDqlDjlmOpYMbzY2Br0ufCwJLdDIXeNVwcWFg==}
+    engines: {node: '>=10'}
+
   picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -1509,6 +1545,25 @@ packages:
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
+
+  postgres-array@3.0.4:
+    resolution: {integrity: sha512-nAUSGfSDGOaOAEGwqsRY27GPOea7CNipJPOA7lPbdEpx5Kg3qzdP0AaWC5MlhTWV9s4hFX39nomVZ+C4tnGOJQ==}
+    engines: {node: '>=12'}
+
+  postgres-bytea@3.0.0:
+    resolution: {integrity: sha512-CNd4jim9RFPkObHSjVHlVrxoVQXz7quwNFpz7RY1okNNme49+sVyiTvTRobiLV548Hx/hb1BG+iE7h9493WzFw==}
+    engines: {node: '>= 6'}
+
+  postgres-date@2.1.0:
+    resolution: {integrity: sha512-K7Juri8gtgXVcDfZttFKVmhglp7epKb1K4pgrkLxehjqkrgPhfG6OO8LHLkfaqkbpjNRnra018XwAr1yQFWGcA==}
+    engines: {node: '>=12'}
+
+  postgres-interval@3.0.0:
+    resolution: {integrity: sha512-BSNDnbyZCXSxgA+1f5UU2GmwhoI0aU5yMxRGO8CdFEcY2BQF9xm/7MqKnYoM1nJDk8nONNWDk9WeSmePFhQdlw==}
+    engines: {node: '>=12'}
+
+  postgres-range@1.1.4:
+    resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
   preact-iso@2.12.2:
     resolution: {integrity: sha512-qit+qSMiZ41K0EQkLNa3MSxnWVCm5yXvy9m3CcGf/zF1QhVJzSwVCbpiz52VSbWpg8v8nYNIYDrXJZPNFpM1uw==}
@@ -2085,7 +2140,7 @@ snapshots:
       graphql: 16.15.0
       tslib: 2.6.3
 
-  '@graphql-codegen/cli@5.0.6(@types/node@26.6.6)(graphql@16.15.0)(supports-color@7.2.0)(typescript@5.8.3)':
+  '@graphql-codegen/cli@5.0.6(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(supports-color@7.2.0)(typescript@5.8.3)':
     dependencies:
       '@babel/generator': 7.29.13
       '@babel/template': 7.29.7
@@ -2100,8 +2155,8 @@ snapshots:
       '@graphql-tools/graphql-file-loader': 8.1.24(graphql@16.15.0)
       '@graphql-tools/json-file-loader': 8.0.38(graphql@16.15.0)
       '@graphql-tools/load': 8.1.21(graphql@16.15.0)
-      '@graphql-tools/prisma-loader': 8.0.17(@types/node@26.6.6)(graphql@16.15.0)(supports-color@7.2.0)
-      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(graphql@16.15.0)
+      '@graphql-tools/prisma-loader': 8.0.17(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(supports-color@7.2.0)
+      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)
       '@graphql-tools/utils': 10.11.0(graphql@16.15.0)
       '@whatwg-node/fetch': 0.10.13
       chalk: 4.1.2
@@ -2109,7 +2164,7 @@ snapshots:
       debounce: 1.2.1
       detect-indent: 6.1.0
       graphql: 16.15.0
-      graphql-config: 5.1.3(@types/node@26.6.6)(graphql@16.15.0)(typescript@5.8.3)
+      graphql-config: 5.1.3(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(typescript@5.8.3)
       inquirer: 8.2.7(@types/node@26.6.6)
       is-glob: 4.0.3
       jiti: 1.21.7
@@ -2285,16 +2340,16 @@ snapshots:
       '@graphql-tools/utils': 10.11.0(graphql@16.15.0)
       graphql: 16.15.0
 
-  '@graphql-tools/executor-graphql-ws@1.3.7(graphql@16.15.0)':
+  '@graphql-tools/executor-graphql-ws@1.3.7(bufferutil@4.2.0)(graphql@16.15.0)':
     dependencies:
       '@graphql-tools/executor-common': 0.0.1(graphql@16.15.0)
       '@graphql-tools/utils': 10.11.0(graphql@16.15.0)
       '@whatwg-node/disposablestack': 0.0.5
       graphql: 16.15.0
       graphql-ws: 5.16.2(graphql@16.15.0)
-      isomorphic-ws: 5.0.0(ws@8.22.2)
+      isomorphic-ws: 5.0.0(ws@8.22.2(bufferutil@4.2.0))
       tslib: 2.9.1
-      ws: 8.22.2
+      ws: 8.22.2(bufferutil@4.2.0)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2314,14 +2369,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@graphql-tools/executor-legacy-ws@1.1.39(graphql@16.15.0)':
+  '@graphql-tools/executor-legacy-ws@1.1.39(bufferutil@4.2.0)(graphql@16.15.0)':
     dependencies:
       '@graphql-tools/utils': 12.1.0(graphql@16.15.0)
       '@types/ws': 8.18.2
       graphql: 16.15.0
-      isomorphic-ws: 5.0.0(ws@8.22.2)
+      isomorphic-ws: 5.0.0(ws@8.22.2(bufferutil@4.2.0))
       tslib: 2.9.1
-      ws: 8.22.2
+      ws: 8.22.2(bufferutil@4.2.0)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2417,9 +2472,9 @@ snapshots:
       graphql: 16.15.0
       tslib: 2.6.3
 
-  '@graphql-tools/prisma-loader@8.0.17(@types/node@26.6.6)(graphql@16.15.0)(supports-color@7.2.0)':
+  '@graphql-tools/prisma-loader@8.0.17(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(supports-color@7.2.0)':
     dependencies:
-      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(graphql@16.15.0)
+      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)
       '@graphql-tools/utils': 10.11.0(graphql@16.15.0)
       '@types/js-yaml': 4.0.9
       '@whatwg-node/fetch': 0.10.13
@@ -2457,21 +2512,21 @@ snapshots:
       graphql: 16.15.0
       tslib: 2.9.1
 
-  '@graphql-tools/url-loader@8.0.16(@types/node@26.6.6)(graphql@16.15.0)':
+  '@graphql-tools/url-loader@8.0.16(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)':
     dependencies:
       '@ardatan/sync-fetch': 0.0.1
-      '@graphql-tools/executor-graphql-ws': 1.3.7(graphql@16.15.0)
+      '@graphql-tools/executor-graphql-ws': 1.3.7(bufferutil@4.2.0)(graphql@16.15.0)
       '@graphql-tools/executor-http': 1.3.3(@types/node@26.6.6)(graphql@16.15.0)
-      '@graphql-tools/executor-legacy-ws': 1.1.39(graphql@16.15.0)
+      '@graphql-tools/executor-legacy-ws': 1.1.39(bufferutil@4.2.0)(graphql@16.15.0)
       '@graphql-tools/utils': 10.11.0(graphql@16.15.0)
       '@graphql-tools/wrap': 10.1.4(graphql@16.15.0)
       '@types/ws': 8.18.2
       '@whatwg-node/fetch': 0.10.13
       graphql: 16.15.0
-      isomorphic-ws: 5.0.0(ws@8.22.2)
+      isomorphic-ws: 5.0.0(ws@8.22.2(bufferutil@4.2.0))
       tslib: 2.9.1
       value-or-promise: 1.0.12
-      ws: 8.22.2
+      ws: 8.22.2(bufferutil@4.2.0)
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -2558,6 +2613,10 @@ snapshots:
       - encoding
       - supports-color
 
+  '@neondatabase/serverless@0.9.5':
+    dependencies:
+      '@types/pg': 8.11.6
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -2585,14 +2644,14 @@ snapshots:
       estree-walker: 2.0.2
       picomatch: 4.0.7
 
-  '@shopify/shopify_function@2.0.1(@types/node@26.6.6)(supports-color@7.2.0)':
+  '@shopify/shopify_function@2.0.1(@types/node@26.6.6)(bufferutil@4.2.0)(supports-color@7.2.0)':
     dependencies:
-      '@graphql-codegen/cli': 5.0.6(@types/node@26.6.6)(graphql@16.15.0)(supports-color@7.2.0)(typescript@5.8.3)
+      '@graphql-codegen/cli': 5.0.6(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(supports-color@7.2.0)(typescript@5.8.3)
       '@graphql-codegen/typescript': 4.1.6(graphql@16.15.0)
       '@graphql-codegen/typescript-operations': 4.6.1(graphql@16.15.0)
-      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(graphql@16.15.0)
+      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)
       graphql: 16.15.0
-      graphql-config: 5.1.3(@types/node@26.6.6)(graphql@16.15.0)(typescript@5.8.3)
+      graphql-config: 5.1.3(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(typescript@5.8.3)
       typescript: 5.8.3
     transitivePeerDependencies:
       - '@parcel/watcher'
@@ -2639,6 +2698,12 @@ snapshots:
   '@types/node@26.6.6':
     dependencies:
       undici-types: 8.9.0
+
+  '@types/pg@8.11.6':
+    dependencies:
+      '@types/node': 26.6.6
+      pg-protocol: 1.16.1
+      pg-types: 4.1.0
 
   '@types/ws@8.18.2':
     dependencies:
@@ -2698,6 +2763,14 @@ snapshots:
       - encoding
       - rollup
       - supports-color
+
+  '@vercel/postgres@0.10.0':
+    dependencies:
+      '@neondatabase/serverless': 0.9.5
+      bufferutil: 4.2.0
+      ws: 8.22.2(bufferutil@4.2.0)
+    transitivePeerDependencies:
+      - utf-8-validate
 
   '@vercel/static-config@3.4.1':
     dependencies:
@@ -2844,6 +2917,10 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  bufferutil@4.2.0:
+    dependencies:
+      node-gyp-build: 4.8.4
 
   callsites@3.1.0: {}
 
@@ -3130,13 +3207,13 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-config@5.1.3(@types/node@26.6.6)(graphql@16.15.0)(typescript@5.8.3):
+  graphql-config@5.1.3(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)(typescript@5.8.3):
     dependencies:
       '@graphql-tools/graphql-file-loader': 8.1.24(graphql@16.15.0)
       '@graphql-tools/json-file-loader': 8.0.38(graphql@16.15.0)
       '@graphql-tools/load': 8.1.21(graphql@16.15.0)
       '@graphql-tools/merge': 9.2.8(graphql@16.15.0)
-      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(graphql@16.15.0)
+      '@graphql-tools/url-loader': 8.0.16(@types/node@26.6.6)(bufferutil@4.2.0)(graphql@16.15.0)
       '@graphql-tools/utils': 10.11.0(graphql@16.15.0)
       cosmiconfig: 8.3.6(typescript@5.8.3)
       graphql: 16.15.0
@@ -3277,9 +3354,9 @@ snapshots:
 
   is-windows@1.0.2: {}
 
-  isomorphic-ws@5.0.0(ws@8.22.2):
+  isomorphic-ws@5.0.0(ws@8.22.2(bufferutil@4.2.0)):
     dependencies:
-      ws: 8.22.2
+      ws: 8.22.2(bufferutil@4.2.0)
 
   jiti@1.21.7: {}
 
@@ -3438,6 +3515,8 @@ snapshots:
     dependencies:
       remove-trailing-separator: 1.1.0
 
+  obuf@1.1.2: {}
+
   onetime@5.1.2:
     dependencies:
       mimic-fn: 2.1.0
@@ -3515,6 +3594,22 @@ snapshots:
 
   path-type@4.0.0: {}
 
+  pg-int8@1.0.1: {}
+
+  pg-numeric@1.0.2: {}
+
+  pg-protocol@1.16.1: {}
+
+  pg-types@4.1.0:
+    dependencies:
+      pg-int8: 1.0.1
+      pg-numeric: 1.0.2
+      postgres-array: 3.0.4
+      postgres-bytea: 3.0.0
+      postgres-date: 2.1.0
+      postgres-interval: 3.0.0
+      postgres-range: 1.1.4
+
   picocolors@1.0.0: {}
 
   picocolors@1.1.1: {}
@@ -3522,6 +3617,18 @@ snapshots:
   picomatch@2.3.2: {}
 
   picomatch@4.0.7: {}
+
+  postgres-array@3.0.4: {}
+
+  postgres-bytea@3.0.0:
+    dependencies:
+      obuf: 1.1.2
+
+  postgres-date@2.1.0: {}
+
+  postgres-interval@3.0.0: {}
+
+  postgres-range@1.1.4: {}
 
   preact-iso@2.12.2(preact-render-to-string@6.8.2)(preact@10.29.8):
     dependencies:
@@ -3790,7 +3897,9 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  ws@8.22.2: {}
+  ws@8.22.2(bufferutil@4.2.0):
+    optionalDependencies:
+      bufferutil: 4.2.0
 
   y18n@5.0.8: {}
 

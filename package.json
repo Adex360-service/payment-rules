@@ -15,7 +15,8 @@
     "vercel:dev": "vercel dev"
   },
   "dependencies": {
-    "@vercel/node": "^5.5.0"
+    "@vercel/node": "^5.5.0",
+    "@vercel/postgres": "^0.10.0"
   },
   "trustedDependencies": [
     "@shopify/plugin-cloudflare"

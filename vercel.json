@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "nodejs20.x"
-    }
-  }
+  "buildCommand": "echo 'Vercel API build complete'",
+  "outputDirectory": "public"
 }

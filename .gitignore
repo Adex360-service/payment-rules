@@ -34,3 +34,4 @@ shared/types/graphql
 *.njsproj
 *.sln
 *.sw?
+.vercel

@@ -2,7 +2,7 @@
 
 client_id = "4364e60dfe126784971bd11a1786dbd0"
 name = "PaymentModifier"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://payment-modifier.vercel.app"
 embedded = true
 
 [build]
@@ -11,13 +11,26 @@ automatically_update_urls_on_dev = true
 [webhooks]
 api_version = "2026-10"
 
+[[webhooks.subscriptions]]
+topics = ["orders/create"]
+uri = "/api/webhooks/orders-create"
+include_fields = ["id", "created_at"]
+
+[[webhooks.subscriptions]]
+topics = ["app/uninstalled"]
+uri = "/api/webhooks/compliance"
+
+[[webhooks.subscriptions]]
+uri = "/api/webhooks/compliance"
+compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+
 [access.admin]
 direct_api_mode = "online"
 embedded_app_direct_api_access = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_payment_customizations,write_payment_customizations"
+scopes = "read_orders,read_payment_customizations,write_payment_customizations"
 
 [auth]
 redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
