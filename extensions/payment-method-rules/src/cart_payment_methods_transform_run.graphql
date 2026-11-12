@@ -18,4 +18,9 @@ query CartPaymentMethodsTransformRunInput {
     id
     name
   }
+  paymentCustomization {
+    metafield(namespace: "$app:payment-customization", key: "function-configuration") {
+      jsonValue
+    }
+  }
 }

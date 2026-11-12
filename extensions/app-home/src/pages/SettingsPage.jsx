@@ -1,35 +1,55 @@
 import {useEffect, useState} from 'preact/hooks';
 import {
-  enablePaymentMethodRules,
-  isPaymentMethodRulesEnabled,
+  DEFAULT_RULES,
+  PAYMENT_METHODS,
+  getPaymentMethodRulesState,
+  savePaymentMethodRules,
 } from '../../../../shared/models/paymentCustomization';
+
+const SCENARIOS = [
+  {key: 'eco', title: 'Eco products only', tag: 'Eco'},
+  {key: 'smartphone', title: 'Smartphone products only', tag: 'smartphones'},
+  {key: 'combined', title: 'Both product categories', tag: 'Eco + smartphones'},
+];
+
+function checkedValue(event) {
+  return Boolean(event.currentTarget?.checked ?? event.target?.checked);
+}
 
 export default function SettingsPage() {
   const [status, setStatus] = useState('checking');
+  const [rules, setRules] = useState(DEFAULT_RULES);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    isPaymentMethodRulesEnabled()
-      .then((enabled) => setStatus(enabled ? 'enabled' : 'idle'))
+    getPaymentMethodRulesState()
+      .then((state) => {
+        setRules(state.rules);
+        setStatus(state.enabled ? 'enabled' : 'idle');
+      })
       .catch(() => {
-        setError('Failed to check payment method rules status');
+        setError('Failed to load payment method rules');
         setStatus('idle');
       });
   }, []);
 
-  const enableRules = async () => {
+  const updateRule = (scenario, method, visible) => {
+    setRules((current) => ({
+      ...current,
+      [scenario]: {...current[scenario], [method]: visible},
+    }));
+    setStatus('unsaved');
+  };
+
+  const saveRules = async () => {
     setStatus('saving');
     setError(null);
     try {
-      await enablePaymentMethodRules();
+      await savePaymentMethodRules(rules);
       setStatus('enabled');
     } catch (caughtError) {
-      setError(
-        caughtError instanceof Error
-          ? caughtError.message
-          : 'Failed to enable payment method rules',
-      );
-      setStatus('idle');
+      setError(caughtError instanceof Error ? caughtError.message : 'Failed to save payment method rules');
+      setStatus('unsaved');
     }
   };
 
@@ -38,89 +58,40 @@ export default function SettingsPage() {
       <s-section>
         <s-heading>Conditional payment visibility</s-heading>
         <s-paragraph>
-          Payment methods are evaluated on the complete cart at checkout and update automatically when cart contents change.
+          Choose which payment methods are shown for each product-tag combination. Changes apply automatically at checkout.
         </s-paragraph>
         {error && <s-banner tone="critical">{error}</s-banner>}
-        {status === 'enabled' && <s-banner tone="success">Payment method rules are enabled.</s-banner>}
-        <s-button
-          onClick={enableRules}
-          loading={status === 'saving'}
-          disabled={status === 'checking' || status === 'enabled'}
-        >
-          {status === 'enabled' ? 'Payment method rules enabled' : 'Enable payment method rules'}
+        {status === 'enabled' && <s-banner tone="success">Payment method rules are saved and enabled.</s-banner>}
+        {status === 'unsaved' && <s-banner tone="warning">You have unsaved rule changes.</s-banner>}
+        <s-button onClick={saveRules} loading={status === 'saving'} disabled={status === 'checking'}>
+          {status === 'saving' ? 'Saving rules' : 'Save payment method rules'}
         </s-button>
       </s-section>
+
+      <s-section heading="Product tag rules">
+        <s-paragraph>
+          The app evaluates the entire cart. The supported product tags are <strong>Eco</strong> and <strong>smartphones</strong>.
+        </s-paragraph>
+        {SCENARIOS.map((scenario) => (
+          <s-section key={scenario.key} heading={scenario.title}>
+            <s-paragraph>Applied when the cart contains: {scenario.tag}</s-paragraph>
+            {PAYMENT_METHODS.map((method) => (
+              <s-checkbox
+                key={method.key}
+                checked={Boolean(rules[scenario.key]?.[method.key])}
+                onChange={(event) => updateRule(scenario.key, method.key, checkedValue(event))}
+              >
+                Show {method.label}
+              </s-checkbox>
+            ))}
+          </s-section>
+        ))}
+      </s-section>
+
       <s-section heading="Plan">
         <s-heading>Free plan</s-heading>
-        <s-paragraph>$0 per month · Up to 100 orders per month · No per-order charges</s-paragraph>
-        <s-paragraph>
-          Payment rules are available while the store remains within the monthly order allowance.
-        </s-paragraph>
-      </s-section>
-      <s-section heading="Configured providers">
-        <s-paragraph>
-          UNumPay is used as the Bank Alfalah rule. JazzCash is used as the Yeylo rule.
-        </s-paragraph>
-        <s-table>
-          <s-table-header-row>
-            <s-table-header listSlot="primary">Provider</s-table-header>
-            <s-table-header>Rule name</s-table-header>
-            <s-table-header>Behavior</s-table-header>
-          </s-table-header-row>
-          <s-table-body>
-            <s-table-row>
-              <s-table-cell>Payfast</s-table-cell>
-              <s-table-cell>Payfast</s-table-cell>
-              <s-table-cell>Eco products only</s-table-cell>
-            </s-table-row>
-            <s-table-row>
-              <s-table-cell>UNumPay</s-table-cell>
-              <s-table-cell>Bank Alfalah</s-table-cell>
-              <s-table-cell>Smartphone products only</s-table-cell>
-            </s-table-row>
-            <s-table-row>
-              <s-table-cell>JazzCash</s-table-cell>
-              <s-table-cell>Yeylo</s-table-cell>
-              <s-table-cell>Always visible</s-table-cell>
-            </s-table-row>
-            <s-table-row>
-              <s-table-cell>Bank Deposit</s-table-cell>
-              <s-table-cell>Bank Deposit</s-table-cell>
-              <s-table-cell>Always visible</s-table-cell>
-            </s-table-row>
-            <s-table-row>
-              <s-table-cell>Cash on Delivery (COD)</s-table-cell>
-              <s-table-cell>COD</s-table-cell>
-              <s-table-cell>Always visible</s-table-cell>
-            </s-table-row>
-          </s-table-body>
-        </s-table>
-      </s-section>
-      <s-section heading="Cart rules">
-        <s-table>
-          <s-table-header-row>
-            <s-table-header listSlot="primary">Cart tags</s-table-header>
-            <s-table-header>Visible methods</s-table-header>
-            <s-table-header>Hidden methods</s-table-header>
-          </s-table-header-row>
-          <s-table-body>
-            <s-table-row>
-              <s-table-cell>Eco</s-table-cell>
-              <s-table-cell>Payfast, Bank Deposit, JazzCash, COD</s-table-cell>
-              <s-table-cell>UNumPay</s-table-cell>
-            </s-table-row>
-            <s-table-row>
-              <s-table-cell>smartphones</s-table-cell>
-              <s-table-cell>UNumPay, Bank Deposit, JazzCash, COD</s-table-cell>
-              <s-table-cell>Payfast</s-table-cell>
-            </s-table-row>
-            <s-table-row>
-              <s-table-cell>Eco + smartphones</s-table-cell>
-              <s-table-cell>Bank Deposit, JazzCash, COD</s-table-cell>
-              <s-table-cell>Payfast, UNumPay</s-table-cell>
-            </s-table-row>
-          </s-table-body>
-        </s-table>
+        <s-paragraph>$0 per month · No per-order charges</s-paragraph>
+        <s-paragraph>Payment method rules are included without an order-based limit.</s-paragraph>
       </s-section>
     </s-page>
   );

@@ -1,6 +1,5 @@
 import crypto from 'node:crypto';
 import type {VercelRequest, VercelResponse} from '@vercel/node';
-import {sql} from '@vercel/postgres';
 
 export const config = {api: {bodyParser: false}};
 
@@ -24,15 +23,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const body = await rawBody(request);
   if (!validHmac(body, request.headers['x-shopify-hmac-sha256'] as string | undefined)) {
     return response.status(401).json({error: 'Invalid webhook signature'});
-  }
-
-  const topic = request.headers['x-shopify-topic'];
-  const shop = request.headers['x-shopify-shop-domain'];
-  if (typeof shop !== 'string') return response.status(400).json({error: 'Missing shop domain'});
-
-  if (topic === 'app/uninstalled' || topic === 'shop/redact') {
-    await sql`delete from processed_orders where shop_domain = ${shop}`;
-    await sql`delete from monthly_order_usage where shop_domain = ${shop}`;
   }
 
   return response.status(200).json({ok: true});

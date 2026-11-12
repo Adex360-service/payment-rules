@@ -3231,4 +3231,4 @@ export enum WeightUnit {
 export type CartPaymentMethodsTransformRunInputVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CartPaymentMethodsTransformRunInput = { __typename?: 'Input', cart: { __typename?: 'Cart', lines: Array<{ __typename?: 'CartLine', merchandise: { __typename: 'CustomProduct' } | { __typename: 'ProductVariant', product: { __typename?: 'Product', hasTags: Array<{ __typename?: 'HasTagResponse', hasTag: boolean, tag: string }> } } }> }, paymentMethods: Array<{ __typename?: 'PaymentCustomizationPaymentMethod', id: string, name: string }> };
+export type CartPaymentMethodsTransformRunInput = { __typename?: 'Input', cart: { __typename?: 'Cart', lines: Array<{ __typename?: 'CartLine', merchandise: { __typename: 'CustomProduct' } | { __typename: 'ProductVariant', product: { __typename?: 'Product', hasTags: Array<{ __typename?: 'HasTagResponse', hasTag: boolean, tag: string }> } } }> }, paymentMethods: Array<{ __typename?: 'PaymentCustomizationPaymentMethod', id: string, name: string }>, paymentCustomization: { __typename?: 'PaymentCustomization', metafield?: { __typename?: 'Metafield', jsonValue: unknown } | null } };

@@ -37,6 +37,6 @@ After installing the app, open the app landing page and select **Enable payment 
 
 ## Pricing
 
-The app has one free plan: $0 per month for up to 100 orders per month. It has no per-order charge and no paid plan.
+The app has one free plan: $0 per month with no per-order charge and no paid plan.
 
 For public distribution, configure a single free plan in the Shopify Partner Dashboard under App Pricing before submitting the app for review.

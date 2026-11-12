@@ -12,6 +12,12 @@
   "dependencies": {
     "@shopify/shopify_function": "^2.0.1"
   },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "graphql": "^16.15.0"
+  },
   "codegen": {
     "schema": "schema.graphql",
     "documents": "src/*.graphql",

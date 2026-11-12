@@ -10,6 +10,12 @@ const NO_CHANGES = {operations: []};
 const TAG_ECO = 'eco';
 const TAG_SMARTPHONE = 'smartphones';
 
+const DEFAULT_RULES = {
+  eco: {payfast: true, bankalfalah: false, bankdeposit: true, yeylo: true, cod: true},
+  smartphone: {payfast: false, bankalfalah: true, bankdeposit: true, yeylo: true, cod: true},
+  combined: {payfast: false, bankalfalah: false, bankdeposit: true, yeylo: true, cod: true},
+};
+
 /** @param {string} value */
 function normalize(value) {
   return value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -36,14 +42,17 @@ export function cartPaymentMethodsTransformRun(input) {
 
   const isEcoOnly = hasEcoProduct && !hasSmartphoneProduct;
   const isSmartphoneOnly = hasSmartphoneProduct && !hasEcoProduct;
+  const isCombined = hasEcoProduct && hasSmartphoneProduct;
 
-  const visiblePaymentMethods = {
-    payfast: isEcoOnly,
-    bankalfalah: isSmartphoneOnly,
-    bankdeposit: true,
-    yeylo: true,
-    cod: true,
-  };
+  if (!isEcoOnly && !isSmartphoneOnly && !isCombined) return NO_CHANGES;
+
+  const configuredRules = input.paymentCustomization?.metafield?.jsonValue;
+  const rules = configuredRules && typeof configuredRules === 'object' ? configuredRules : DEFAULT_RULES;
+  const visiblePaymentMethods = isCombined
+    ? {...DEFAULT_RULES.combined, ...(rules.combined ?? {})}
+    : isEcoOnly
+      ? {...DEFAULT_RULES.eco, ...(rules.eco ?? {})}
+      : {...DEFAULT_RULES.smartphone, ...(rules.smartphone ?? {})};
 
   const methodKey = {
     payfast: 'payfast',

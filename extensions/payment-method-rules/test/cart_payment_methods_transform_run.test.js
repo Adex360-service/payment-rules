@@ -30,6 +30,17 @@ function hiddenIds(lines) {
     .sort();
 }
 
+function hiddenIdsWithRules(lines, rules) {
+  const result = cartPaymentMethodsTransformRun({
+    cart: {lines},
+    paymentMethods,
+    paymentCustomization: {metafield: {jsonValue: rules}},
+  });
+  return result.operations
+    .map(({paymentMethodHide}) => paymentMethodHide.paymentMethodId)
+    .sort();
+}
+
 test('shows Payfast and hides Bank Alfalah for eco-only carts', () => {
   assert.deepEqual(hiddenIds([line('Eco')]), ['alfalah']);
 });
@@ -43,6 +54,12 @@ test('hides both exclusive methods for combined carts', () => {
 });
 
 test('does not classify untagged or empty carts as either category', () => {
-  assert.deepEqual(hiddenIds([line('other')]), ['alfalah', 'payfast']);
-  assert.deepEqual(hiddenIds([]), ['alfalah', 'payfast']);
+  assert.deepEqual(hiddenIds([line('other')]), []);
+  assert.deepEqual(hiddenIds([]), []);
+});
+
+test('uses saved visibility rules for a cart scenario', () => {
+  assert.deepEqual(hiddenIdsWithRules([line('Eco')], {
+    eco: {payfast: false, bankalfalah: true, bankdeposit: true, yeylo: true, cod: true},
+  }), ['payfast']);
 });
